@@ -55,7 +55,7 @@
 # This protects the role in various edge cases to function properly.
 - name: Assert EPEL configuration
   tags: util
-  when: ansible_os_family == 'RedHat' and (ansible_local is defined) and (ansible_local.util is defined) and (ansible_local.util.epel.enable is defined)
+  when: ansible_os_family == 'RedHat' and ansible_local is defined and ansible_local.util is defined and ansible_local.util.epel.enable is defined
   assert:
     that:
       - util_epel_enable|bool == ansible_local.util.epel.enable|bool
@@ -106,7 +106,7 @@
   changed_when: false
   when:
     - ansible_os_family == 'RedHat'
-    - ansible_local.util.epel.enable is undefined or ansible_local.util.epel.enable != true
+    - ansible_local is undefined or ansible_local.util is undefined or ansible_local.util.epel.enable is undefined or ansible_local.util.epel.enable != true
   check_mode: no
   register: util_registered_installed_repos
   command: yum repolist
@@ -117,6 +117,8 @@
   when:
     - util_epel_enable
     - ansible_os_family == 'RedHat'
+    - ansible_local is undefined
+    - ansible_local.util is undefined
     - ansible_local.util.epel.enable is undefined
     - "'epel' not in util_registered_installed_repos.stdout"
   yum:
