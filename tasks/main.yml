@@ -117,9 +117,7 @@
   when:
     - util_epel_enable
     - ansible_os_family == 'RedHat'
-    - ansible_local is undefined
-    - ansible_local.util is undefined
-    - ansible_local.util.epel.enable is undefined
+    - ansible_local is undefined or ansible_local.util is undefined or ansible_local.util.epel.enable is undefined
     - "'epel' not in util_registered_installed_repos.stdout"
   yum:
     state: "{{ util_package_state }}"
