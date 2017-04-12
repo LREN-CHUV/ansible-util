@@ -55,7 +55,7 @@
 # This protects the role in various edge cases to function properly.
 - name: Assert EPEL configuration
   tags: util
-  when: ansible_os_family == 'RedHat' and ansible_local is defined and ansible_local.util is defined and ansible_local.util.epel.enable is defined
+  when: ansible_os_family == 'RedHat' and (ansible_local is defined) and (ansible_local.util is defined) and (ansible_local.util.epel.enable is defined)
   assert:
     that:
       - util_epel_enable|bool == ansible_local.util.epel.enable|bool
