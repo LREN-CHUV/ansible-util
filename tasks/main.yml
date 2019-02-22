@@ -152,6 +152,6 @@
 # Add some facts for other roles to use
 - name: Include local facts tasks
   tags: util
-  include: "{{ util_path_to_lib_role }}/silpion.lib/tasks/localfacts.yml"
+  include_tasks: "{{ util_path_to_lib_role }}/silpion.lib/tasks/localfacts.yml"
   vars:
     namespace: util
